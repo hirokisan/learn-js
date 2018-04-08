@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <script>
+    class Student {
+      constructor(name) {
+        this.name = name;
+      }
+      getName() {
+        return this.name;
+      }
+    }
+    // (new Object).hogehogeという書き方可能です
+    console.log((new Student('json')).getName());
+
+  </script>
+</body>
+</html>
