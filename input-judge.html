@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+</head>
+<body>
+  <h2>none</h2>
+  <input type="text">
+  <h2>change</h2>
+  <input type="text" id="text-change">
+  <div id="text-change-display"></div>
+  <div id="text-change-count">count: <span></span></div>
+  <h2>keyup</h2>
+  <input type="text" id="text-keyup">
+  <div id="text-keyup-display"></div>
+  <div id="text-keyup-count">count: <span></span></div>
+  <ul>
+    <li>キーが離された際に発火</li>
+    <li>tabで移動してアクティブになった際に発火</li>
+    <li>キー操作で発火</li>
+  </ul>
+  <h2>keydown</h2>
+  <input type="text" id="text-keydown">
+  <div id="text-keydown-display"></div>
+  <div id="text-keydown-count">count: <span></span></div>
+  <ul>
+    <li>キーが押された際に発火</li>
+    <li>tabで別の箇所に移動する際に発火</li>
+    <li>キー操作で発火</li>
+  </ul>
+  <h2>focus</h2>
+  <input type="text" id="text-focus">
+  <div id="text-focus-display"></div>
+  <div id="text-focus-count">count: <span></span></div>
+  <ul>
+    <li>要素にフォーカスが当たったら引数のfunctionを実行</li>
+  </ul>
+  <h2>blur</h2>
+  <input type="text" id="text-blur">
+  <div id="text-blur-display"></div>
+  <div id="text-blur-count">count: <span></span></div>
+  <ul>
+    <li>要素からフォーカスが外れたら引数のfunctionを実行</li>
+  </ul>
+
+  <h2>ref</h2>
+  <ul>
+    <li><a href="http://www.jquerystudy.info/reference/events/blur.html" target="_blank">http://www.jquerystudy.info/reference/events/blur.html</a></li>
+  </ul>
+
+
+    <script>
+      $(function(){
+        var textChangeCount  = 0;
+        var textKeyupCount   = 0;
+        var textKeydownCount = 0;
+        var textFocusCount    = 0;
+        var textBlurCount    = 0;
+
+        $('#text-change').change(function(){
+          textChangeCount += 1;
+          $('#text-change-display').text('changed');
+          $('#text-change-count span').text(textChangeCount);
+        });
+        $('#text-keyup').keyup(function(){
+          textKeyupCount += 1;
+          $('#text-keyup-display').text('keyup');
+          $('#text-keyup-count span').text(textKeyupCount);
+        });
+        $('#text-keydown').keydown(function(){
+          textKeydownCount += 1;
+          $('#text-keydown-display').text('keydown');
+          $('#text-keydown-count span').text(textKeydownCount);
+        });
+        $('#text-focus').focus(function(){
+          textFocusCount += 1;
+          $('#text-focus-display').text('focus');
+          $('#text-focus-count span').text(textFocusCount);
+        });
+        $('#text-blur').blur(function(){
+          textBlurCount += 1;
+          $('#text-blur-display').text('blur');
+          $('#text-blur-count span').text(textBlurCount);
+        });
+      })
+    </script>
+</body>
+</html>
