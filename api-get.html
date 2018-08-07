@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <h2>repository</h2>
+  <div id="repo-list"></div>
+</body>
+</html>
+<script>
+  // fetch https://qiita.com/tomoyukilabs/items/9b464c53450acc0b9574 https://developer.mozilla.org/ja/docs/Web/API/Fetch_API/Using_Fetch
+  fetch('https://api.github.com/users/hirokisan/repos').then(function(response) {
+    return response.json();
+  }).then(function(json) {
+    console.log(json);
+    var target = document.getElementById('repo-list');
+
+    // Object: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Object/values
+    // forEach: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+    Object.values(json).forEach(setTag);
+
+    function setTag(val)
+    {
+      var div = document.createElement("div");
+      var repoTag = document.createElement("a");
+
+      repoTag.innerHTML = val.name;
+      repoTag.href      = val.html_url;
+
+      div.appendChild(repoTag);
+      target.appendChild(div);
+    }
+  });
+</script>
