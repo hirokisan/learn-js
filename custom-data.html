@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <section id="first"></section>
+
+  <script>
+  const target = document.getElementById('first');
+  addHref(target);
+
+  function addHref(e)
+  {
+    var html = document.createElement('a');
+
+    html.innerHTML = "Github";
+    html.dataset.href = "https://github.com/hirokisan/";
+
+    e.appendChild(html);
+  }
+
+  </script>
+</body>
+</html>
