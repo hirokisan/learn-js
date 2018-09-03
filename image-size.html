@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <span id="span" data-src="https://www.gotokyo.org/shared/templates/top_foreign/images/gallery_3.jpg"></span>
+
+  <script>
+  var span = document.getElementById('span');
+  var img = new Image();
+
+  img.src = span.getAttribute('data-src');
+
+  img.onload = function(){
+    console.log(img)
+    console.log(img.width)
+    console.log(img.height)
+  }
+  </script>
+</body>
+</html>
