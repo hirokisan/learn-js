@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+</head>
+<body>
+  <span id="target">target</span>
+  <span id="target2">target2</span>
+  <script>
+  var target  = document.getElementById('target');
+  var target2 = document.getElementById('target2');
+
+  // targetをクリックした数だけtarget2のクリックイベントが重複するので注意
+  target.addEventListener('click', function(){
+    target2.addEventListener('click', function(){
+      console.log('aaa');
+    })
+  })
+  </script>
+</body>
+</html>
