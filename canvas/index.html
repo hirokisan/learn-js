@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/128723/scrawlCore-min.js"></script>
+</head>
+<body>
+  <canvas id="canvas1" width="600" height="400"></canvas>
+  <div id="canvas2-container"></div>
+
+<script>
+scrawl.loadExtensions({
+  path: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/128723/',
+  extensions: ['block'],
+  callback: function() {
+    window.addEventListener('load', function() {
+      scrawl.init();
+      mycode();
+    }, false);
+  }
+});
+
+var mycode = function() {
+  var pad = scrawl.pad.canvas1;
+  var canvas = scrawl.canvas.canvas1;
+  var here, box = false;
+
+  var dragGroup = scrawl.makeGroup({
+    name: 'myDragGroup',
+    cell: pad.base,
+    order: 0,
+  });
+
+  scrawl.makeBlock({
+    name: 'box1',
+    width: 80,
+    height: 40,
+    method: 'fill',
+    fillStyle: 'lightblue',
+    startX: 100,
+    startY: 100,
+    handleX: 'center',
+    handleY: 'center',
+    group: dragGroup.name,
+  })
+
+  var myRedBlock = scrawl.makeBlock({
+    width: 100,
+    height: 100,
+    startX: 50,
+    startY: 50,
+    fillStyle: 'red',
+  });
+
+  // cloneして設定を上書き
+  myRedBlock.clone({
+    name: 'myBlueBlock',
+    startX: 200,
+    fillStyle: 'blue',
+  });
+
+  // cloneしたものをcloneすることはできない
+  //myBlueBlock.clone({
+  //  name: 'myGreenBlock',
+  //  startX: 350,
+  //  fillStyle: 'green',
+  //});
+
+  // cloneしたものはentityからcloneできる
+  scrawl.entity.myBlueBlock.clone({
+    name: 'myBlackBlock',
+    startX: 350,
+    fillStyle: 'black',
+  });
+
+  // entityの値を変更する
+  myRedBlock.set({
+    width: 300,
+    startY: 200,
+    fillStyle: 'pink',
+  })
+
+  // entityの値を変更する
+  scrawl.entity.myBlackBlock.set({
+    startX: 450,
+    roll: 30,
+  })
+
+  scrawl.makeAnimation({
+    fn: function(){
+      // UNCOMMENT THE RENDER FUNCTION to see our work so far
+      scrawl.render();
+    },
+  });
+
+  var stopE = function(e) {
+		if (e) {
+			e.stopPropagation();
+			e.preventDefault();
+		}
+	};
+  var pickupBox = function(e) {
+		stopE(e);
+		here = pad.getMouse();
+		box = dragGroup.getEntityAt(here);
+		if (box) {
+			box.pickupEntity(here);
+		}
+	};
+  var dropBox = function(e) {
+		stopE(e);
+		if (box) {
+			box.dropEntity();
+			box = false;
+		}
+	};
+
+  // render
+  scrawl.render();
+
+  scrawl.addListener('down', pickupBox, canvas);
+	scrawl.addListener(['up', 'leave'], dropBox, canvas);
+
+  var demonstrate_adding_a_new_canvas = function() {
+    scrawl.addCanvasToPage({
+      name: 'canvas2',
+      parentElement: 'canvas2-container',
+      width: 600,
+      height: 400,
+    });
+  };
+  demonstrate_adding_a_new_canvas();
+
+  var demonstrate_clone_block_into_new_canvas = function() {
+    //myRedBlock.clone({
+    //  group: scrawl.pad.canvas2.base,
+    //});
+    var myRedBlock = scrawl.makeBlock({
+      width: 100,
+      height: 100,
+      startX: 50,
+      startY: 50,
+      fillStyle: 'red',
+      // entityを適用するcanvasを指定する
+      group: scrawl.pad.canvas2.base,
+    });
+    scrawl.render();
+  };
+  demonstrate_clone_block_into_new_canvas();
+
+}
+</script>
+<style>
+canvas {
+  border: 1px solid green;
+}
+</style>
+</body>
+</html>

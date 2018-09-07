@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/128723/scrawlCore-min.js"></script>
+</head>
+<body>
+  <canvas id="canvas1" width="600" height="400"></canvas>
+  <button id="open">canvasを表示する</button>
+  <button id="add">canvasにentityを追加する</button>
+  <button id="image">canvasに画像を追加する</button>
+  <img id="car" class="frame" src="" alt="">
+
+<script>
+// 
+$('#image').click(function(){
+  $('#car').attr('src', 'aaaaa.jpg');
+  delete scrawl;
+  mycode();
+});
+
+$('#open').click(function(){
+  //$('#canvas1').show();
+  // setを使えばentityの値を変更可能！
+  // entityの名前はentity生成の際に設定しておくこと！
+  scrawl.entity.myRedBlock.set({
+    width: 300,
+    startY: 200,
+    fillStyle: 'pink',
+  })
+})
+$('#add').click(function(){
+  scrawl.makeBlock({
+    name: 'box1',
+    width: 80,
+    height: 40,
+    method: 'fill',
+    fillStyle: 'lightblue',
+    startX: 200,
+    startY: 200,
+    handleX: 'center',
+    handleY: 'center',
+  })
+});
+
+scrawl.loadExtensions({
+  path: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/128723/',
+	extensions: ['block', 'images', 'wheel', 'frame'],
+  callback: function() {
+    window.addEventListener('load', function() {
+      scrawl.init();
+      mycode();
+    }, false);
+  }
+});
+
+var mycode = function() {
+  // 変数のショートカット設定
+  var pad = scrawl.pad.canvas1;
+  var canvas = scrawl.canvas.canvas1;
+  var here, box = false;
+
+  // ドラッグのグループ設定
+  var dragGroup = scrawl.makeGroup({
+    name: 'myDragGroup',
+    cell: pad.base,
+    order: 0,
+  });
+
+  // entity設定
+  scrawl.makeBlock({
+    name: 'box1',
+    width: 80,
+    height: 40,
+    method: 'fill',
+    fillStyle: 'lightblue',
+    startX: 100,
+    startY: 100,
+    handleX: 'center',
+    handleY: 'center',
+    group: dragGroup.name,
+  })
+
+  var myRedBlock = scrawl.makeBlock({
+    name: 'myRedBlock',
+    width: 100,
+    height: 100,
+    startX: 150,
+    startY: 50,
+    fillStyle: 'red',
+    group: dragGroup.name,
+  });
+
+  scrawl.getImagesByClass('frame');
+
+	scrawl.makeWheel({
+	    name        : 'topLeft',
+	    order       : 2,
+	    startX      : 50,
+	    startY      : 50,
+	    fillStyle   : 'blue',
+    	group: dragGroup.name,
+	    radius      : 8
+	}).clone({
+	    name        : 'topRight',
+	    startX      : 180,
+	    startY      : 50
+	}).clone({
+	    name        : 'bottomRight',
+	    startX      : 180,
+	    startY      : 115
+	}).clone({
+	    name        : 'bottomLeft',
+	    startX      : 50,
+	    startY      : 115
+	});
+
+	scrawl.makeFrame({
+		name: 'test',
+		topLeftPivot: 'topLeft',
+		topRightPivot: 'topRight',
+		bottomRightPivot: 'bottomRight',
+		bottomLeftPivot: 'bottomLeft',
+		source: 'car'
+	});
+
+
+  // ドラッグの場合にはこの方法でrenderする
+  scrawl.makeAnimation({
+    fn: function(){
+      scrawl.render();
+    },
+  });
+
+  var stopE = function(e) {
+		if (e) {
+			e.stopPropagation();
+			e.preventDefault();
+		}
+	};
+  var pickupBox = function(e) {
+		stopE(e);
+		here = pad.getMouse();
+		box = dragGroup.getEntityAt(here);
+		if (box) {
+			box.pickupEntity(here);
+		}
+	};
+  var dropBox = function(e) {
+		stopE(e);
+		if (box) {
+			box.dropEntity();
+			box = false;
+		}
+	};
+
+  scrawl.addListener('down', pickupBox, canvas);
+	scrawl.addListener(['up', 'leave'], dropBox, canvas);
+
+  /* ここまでドラッグ処理 */
+
+
+}
+</script>
+<style>
+canvas {
+  border: 1px solid green;
+}
+</style>
+</body>
+</html>
+

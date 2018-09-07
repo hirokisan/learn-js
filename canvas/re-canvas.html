@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/128723/scrawlCore-min.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <canvas id="canvas1"></canvas>
+  <button id="add">canvasを再生成する</button>
+  <div id="list">
+    <img id="car" class="image" src="aaaaa.jpg" alt="" style="display: none">
+  </div>
+
+<script>
+$('#add').click(function(){
+  var img = $("<img>");
+  img.attr('src', 'ggggg.jpg');
+  img.attr('id', "car");
+  img.attr('class', "image");
+  img.attr('style', "display: none");
+  img.appendTo('#list');
+
+  img.bind('load', function(){
+    scrawl.getImagesByClass('image');
+
+    scrawl.entity.image.set({
+      source : 'car'
+    });
+
+    scrawl.render();
+  });
+})
+
+scrawl.loadExtensions({
+  path: 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/128723/',
+  extensions: ['block', 'images', 'animation'],
+  callback: function() {
+    window.addEventListener('load', function() {
+      scrawl.init();
+      mycode();
+    }, false);
+  }
+});
+
+var mycode = function() {
+
+  var pad = scrawl.pad.canvas1;
+  var canvas = scrawl.canvas.canvas1;
+  var here, box = false;
+
+  scrawl.getImagesByClass('image');
+
+  scrawl.makePicture({
+    name        : 'image',
+    source      : 'car',
+    copyX       : 0,
+    copyY       : 0,
+    order       : 0
+  });
+
+  // render
+  scrawl.render();
+
+}
+</script>
+<style>
+canvas {
+  border: 1px solid green;
+}
+</style>
+</body>
+</html>
+
