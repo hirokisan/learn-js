@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <div id="image-list"></div>
+  <script>
+  $(function(){
+    var img = new Image;
+    // domではないのでこれは機能しない
+    //img.attr('src', 'https://response.jp/imgs/thumb_h2/1302273.jpg');
+    img.src = 'https://response.jp/imgs/thumb_h2/1302273.jpg';
+    img.id = 'id';
+    img.setAttribute('class', 'id');
+    img.style = 'display: block;';
+    $("#image-list").append(img);
+
+    var image = $("img");
+    image.attr('src', 'https://response.jp/imgs/thumb_h2/1302273.jpg');
+    console.log(img);
+    console.log(image);
+  });
+  </script>
+</body>
+</html>
