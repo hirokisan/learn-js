@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title></title>
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
+</head>
+<body>
+  <span aaa="bbb">aaa</span>
+  <script>
+  // we can create attribution which we want
+  var target = $('span[aaa="bbb"]');
+  target.attr('aaa', "qqq");
+
+  console.log($('span[aaa="bbb"]').attr('aaa'));
+  </script>
+</body>
+</html>
