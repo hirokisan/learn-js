@@ -4,18 +4,27 @@
   <meta charset="UTF-8">
   <title></title>
   <script src="https://cdn.rawgit.com/konvajs/konva/2.3.0/konva.min.js"></script>
+  <script
+  src="https://code.jquery.com/jquery-2.2.4.min.js"
+  integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+  crossorigin="anonymous"></script>
 </head>
 <body>
+  <button id="output">output</button>
+  <img id="imgOutput" src="" alt="">
   <img id="image" src="./image/Group111.jpg" alt="" style="display: none">
   <img id="banner" src="./image/Group.jpg" alt="" style="display: none">
   <div id="container"></div>
-  <button id="output">output</button>
-  <img id="imgOutput" src="" alt="">
   <script src="./main.js"></script>
   <style>
   .konvajs-content, .konvajs-content canvas {
+    /* width: 680px !important; */
+    /* height: 480px !important; */
+  }
+  .konvajs-content {
     width: 680px !important;
     height: 480px !important;
+    overflow: hidden;
   }
   </style>
 </body>

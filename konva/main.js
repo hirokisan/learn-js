@@ -3,6 +3,8 @@ var height;
 
 
 var img = new Image();
+var image;
+var banner;
 img.src = document.getElementById('image').src;
 img.onload = function(){
 	width = img.width;
@@ -23,26 +25,28 @@ stage.add(layer2);
 // 背景画像
 var imageObj = new Image();
 imageObj.onload = function() {
-  var image = new Konva.Image({
+  image = new Konva.Image({
     x: 0,
     y: 0,
     image: imageObj,
     width: width,
     height: height,
+    scaleX: 0.5,
+    scaleY: 0.5,
     draggable: true,
-    //dragBoundFunc: function(pos){
-    //  return {
-    //    x: this.getAbsolutePosition().x,
-    //    y: pos.y
-    //  };
-    //}
+    dragBoundFunc: function(pos){
+      return {
+        x: this.getAbsolutePosition().x,
+        y: pos.y
+      };
+    }
   });
   layer1.add(image);
 
   layer1.draw();
 
   image.on('mouseover', function() {
-      document.body.style.cursor = 'pointer';
+      document.body.style.cursor = 'move';
   });
   image.on('mouseout', function() {
       document.body.style.cursor = 'default';
@@ -56,15 +60,14 @@ imageObj.src = src;
 // バナー画像
 var bannerObj = new Image();
 bannerObj.onload = function() {
-  var banner = new Konva.Image({
-    name: 'banner',
-    id: 'banner',
+  banner = new Konva.Image({
     x: 0,
     y: 0,
+    scaleX: 0.5,
+    scaleY: 0.5,
     image: bannerObj,
     width: width,
     height: width*0.15,
-    draggable: false,
   });
   layer2.add(banner);
 
@@ -75,16 +78,13 @@ var src = document.getElementById('banner').src;
 bannerObj.src = src;
 
 document.getElementById('output').addEventListener('click', function () {
+  image.scaleX(1);
+  image.scaleY(1);
+  banner.scaleX(1);
+  banner.scaleY(1);
+
   var dataURL = stage.toDataURL({mimeType:'image/jpeg',quality: 1.0, pixelRatio:1});
   document.getElementById('imgOutput').src = dataURL;
 });
 
 }
-
-window.onload = function(){
-//var canvas;
-//canvas = document.querySelector('canvas');
-//canvas.setAttribute('width', '640px');
-//canvas.setAttribute('height', '480px');
-//console.log(canvas);
-};
